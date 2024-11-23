@@ -1,0 +1,46 @@
+
+import {test, expect, Page, TestInfo, Locator} from "@playwright/test"
+
+export class PlaywrightFactory {
+    private readonly _page: Page;
+    private readonly _testInfo: TestInfo;
+
+    /**
+   * @param {import('@playwright/test').Page} page
+   * @param {import('@playwright/test').TestInfo} testInfo
+   */
+
+    constructor(page: Page, testInfo:TestInfo){
+        this._page = page;
+        this._testInfo = testInfo;
+
+    }
+
+    public async click(objElement: {selector: string, description: string}): Promise<void>{
+        const elementSelector: Locator = this._page.locator(objElement.selector);
+        const elementDescription: string = objElement.description;
+        await test.step ( `🥾 ${elementDescription} is clicked `, async (): Promise<void> =>  {
+            await elementSelector.scrollIntoViewIfNeeded();
+            await elementSelector.click();
+            await this._testInfo.attach(`🥾 ${elementDescription} is clicked `,{
+                body:`🥾 ${elementDescription} is clicked `,
+                contentType: "text/plain"
+            })
+        })
+    }
+
+    public async getSelectorByValue(objElement: {selector: string, description: string}, strValue: string): Promise<any>{
+        const elementSelector: string = await objElement.selector.replace('${value}', strValue);
+        const elementDescription: string = await objElement.description.replace('${value}', strValue);
+        await test.step(`🥾 getting element dynamic selector with value ${elementDescription} `, async (): Promise<void> => {
+            await this._testInfo.attach(`🥾 getting element dynamic selector with value ${elementDescription} `,{
+                body:`🥾 getting element dynamic selector with value ${elementDescription} with locator ${elementSelector}`,
+                contentType: "text/plain"
+            })
+        })
+        return {
+            selector: elementSelector,
+            description: elementDescription
+        };
+    }
+}
