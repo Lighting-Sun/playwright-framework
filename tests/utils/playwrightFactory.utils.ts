@@ -43,4 +43,17 @@ export class PlaywrightFactory {
             description: elementDescription
         };
     }
+
+    public async setValue(objElement: {selector: string, description: string},strValueToSend: string): Promise<void> {
+        const elementSelector: Locator = this._page.locator(objElement.selector);
+        const elementDescription: string = objElement.description;
+        await test.step(`🥾 setting value for element ${elementDescription} with value: ${strValueToSend}`, async (): Promise<void> =>{
+            await elementSelector.scrollIntoViewIfNeeded();
+            await elementSelector.fill(strValueToSend);
+            await this._testInfo.attach(`🥾 setting value for element ${elementDescription} with value: ${strValueToSend}`,{
+                body: `🥾 setting value for element ${objElement.description} with value: ${strValueToSend}`,
+                contentType: "text/plain"
+            })
+        })
+    }
 }
