@@ -54,6 +54,20 @@ export class PlaywrightFactory {
                 body: `🥾 setting value for element ${objElement.description} with value: ${strValueToSend}`,
                 contentType: "text/plain"
             })
-        })
+        });
+    }
+
+    public async getText(objElement: {selector: string, description: string}): Promise<string | null> {
+        const elementSelector: Locator = this._page.locator(objElement.selector);
+        const elementDescription: string = objElement.description;
+        const textFromElement: string | null = await elementSelector.textContent();
+        await test.step(`🥾 Got text from ${objElement.description} with value: ${textFromElement}`, async (): Promise<void> => {
+            await this._testInfo.attach(`🥾 Got text from ${objElement.description} with value: ${textFromElement}`, 
+                {
+                    body: `🥾 Got text from ${objElement.description} with value: ${textFromElement}`,
+                    contentType: "text/plain"
+                }
+            )
+        });
     }
 }
