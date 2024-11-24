@@ -82,9 +82,23 @@ export class PlaywrightFactory {
         return elementsSelector;
     }
 
-    async getTextFromElements(objElements: {selector: string, description: string}): Promise<(string | null)[]> {
+    public async getTextFromElements(objElements: {selector: string, description: string}): Promise<(string | null)[]> {
         const elements: Locator[] = await this.getElements(objElements);
         const elementsText: (string | null)[] = await Promise.all(elements.map(async element => await element.textContent()));
         return elementsText;
+    }
+
+    public async selectOptionFromSelect(objElement: {selector: string, description: string}, strValue: string): Promise<void>{
+        const elementSelector: Locator = this._page.locator(objElement.selector);
+        const elementDescription: string = objElement.description;
+
+        await test.step(`🥾 Select ${elementDescription} with option ${strValue} was clicked`, async (): Promise<void> => {
+            await elementSelector.scrollIntoViewIfNeeded();
+            await elementSelector.selectOption(strValue);
+            await this._testInfo.attach(`🥾 Select ${elementDescription} with option ${strValue} was clicked`,{
+                body: `🥾 Select ${elementDescription} with option ${strValue} was clicked`,
+                contentType: "text/plain"
+            })
+        })
     }
 }
