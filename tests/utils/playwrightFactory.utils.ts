@@ -61,13 +61,24 @@ export class PlaywrightFactory {
         const elementSelector: Locator = this._page.locator(objElement.selector);
         const elementDescription: string = objElement.description;
         const textFromElement: string | null = await elementSelector.textContent();
-        await test.step(`🥾 Got text from ${objElement.description} with value: ${textFromElement}`, async (): Promise<void> => {
-            await this._testInfo.attach(`🥾 Got text from ${objElement.description} with value: ${textFromElement}`, 
+        await test.step(`🥾 Got text from ${elementDescription} with value: ${textFromElement}`, async (): Promise<void> => {
+            await this._testInfo.attach(`🥾 Got text from ${elementDescription} with value: ${textFromElement}`, 
                 {
-                    body: `🥾 Got text from ${objElement.description} with value: ${textFromElement}`,
+                    body: `🥾 Got text from ${elementDescription} with value: ${textFromElement}`,
                     contentType: "text/plain"
                 }
             )
         });
+        return textFromElement;
+    }
+
+    public async waitForDomLoad() : Promise<void> {
+        await this._page.waitForLoadState('domcontentloaded')
+    }
+
+    async getElements(objElements: {selector: string, description: string}): Promise<Locator[]> {
+        await this.waitForDomLoad();
+        const elementsSelector: Promise<Locator[]> = this._page.locator(objElements.selector).all();
+        return elementsSelector;
     }
 }
