@@ -76,9 +76,15 @@ export class PlaywrightFactory {
         await this._page.waitForLoadState('domcontentloaded')
     }
 
-    async getElements(objElements: {selector: string, description: string}): Promise<Locator[]> {
+    public async getElements(objElements: {selector: string, description: string}): Promise<Locator[]> {
         await this.waitForDomLoad();
         const elementsSelector: Promise<Locator[]> = this._page.locator(objElements.selector).all();
         return elementsSelector;
+    }
+
+    async getTextFromElements(objElements: {selector: string, description: string}): Promise<(string | null)[]> {
+        const elements: Locator[] = await this.getElements(objElements);
+        const elementsText: (string | null)[] = await Promise.all(elements.map(async element => await element.textContent()));
+        return elementsText;
     }
 }
