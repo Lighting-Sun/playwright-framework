@@ -101,4 +101,21 @@ export class PlaywrightFactory {
             })
         })
     }
+
+    public async clickAllIfExists(objElement: {selector: string, description: string}): Promise<void> {
+        let elementSelector: Locator = this._page.locator(objElement.selector).first();
+        let elementDescription = objElement.description;
+        await test.step(`🥾 Clicking all ${elementDescription} elements `, async () => {
+            let elementCount : number = await this._page.locator(objElement.selector).count();
+            while (elementCount > 0) {
+                await elementSelector.click();
+                elementSelector = this._page.locator(objElement.selector).first();
+                elementCount = await this._page.locator(objElement.selector).count();
+            }
+            await this._testInfo.attach(`🥾 all elements ${objElement.description} were clicked`,{
+                body: `🥾 all elements ${objElement.description} were clicked`,
+                contentType: "text/plain"
+            })
+        })
+    }
 }
