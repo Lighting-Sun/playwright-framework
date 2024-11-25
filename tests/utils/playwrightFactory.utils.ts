@@ -62,7 +62,7 @@ export class PlaywrightFactory {
         const elementDescription: string = objElement.description;
         const textFromElement: string | null = await elementSelector.textContent();
         await test.step(`🥾 Got text from ${elementDescription} with value: ${textFromElement}`, async (): Promise<void> => {
-            await this._testInfo.attach(`🥾 Got text from ${elementDescription} with value: ${textFromElement}`, 
+            await this._testInfo.attach(`🥾 Got text from ${elementDescription} with value: ${textFromElement}`,
                 {
                     body: `🥾 Got text from ${elementDescription} with value: ${textFromElement}`,
                     contentType: "text/plain"
@@ -77,14 +77,27 @@ export class PlaywrightFactory {
     }
 
     public async getElements(objElements: {selector: string, description: string}): Promise<Locator[]> {
+
         await this.waitForDomLoad();
         const elementsSelector: Promise<Locator[]> = this._page.locator(objElements.selector).all();
+        await test.step(`🥾 Selecting elements of ${objElements.description}`, async () => {
+            await this._testInfo.attach(`🥾 selecting elements of ${objElements.description}`,{
+                body: `🥾 Selecting elements of ${objElements.description} using locator: ${objElements.selector}`,
+                contentType: "text/plain"
+            })
+        })
         return elementsSelector;
     }
 
     public async getTextFromElements(objElements: {selector: string, description: string}): Promise<(string | null)[]> {
         const elements: Locator[] = await this.getElements(objElements);
         const elementsText: (string | null)[] = await Promise.all(elements.map(async element => await element.textContent()));
+        await test.step(`🥾 Got text from ${objElements.description}`, async () => {
+            await this._testInfo.attach(`🥾 Got text from ${objElements.description}`,{
+                body: `🥾 Got text from ${objElements.description} using locator: ${objElements.selector}`,
+                contentType: "text/plain"
+            })
+        })
         return elementsText;
     }
 
