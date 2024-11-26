@@ -43,4 +43,14 @@ class LoginPage extends basePage {
             })
         })
     }
+
+    public async fillUsername (username: string): Promise<void>{
+        test.step(`filling username with value ${username}`, async () => {
+            await this.playWrightFactory.setValue(this.locators.usernameInput,username);
+            this._testInfo.attach(`filling username with value ${username}`,{
+                body: `filling username with value ${username}`,
+                contentType: "text/plain"
+            })
+        })
+    }
 }
