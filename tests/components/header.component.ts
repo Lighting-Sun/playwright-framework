@@ -2,7 +2,7 @@ import { Page, TestInfo, test } from "@playwright/test";
 import { BaseComponent } from "./base.component";
 
 
-class Header extends BaseComponent {
+export class Header extends BaseComponent {
 
 
     constructor(page: Page, testInfo: TestInfo) {
