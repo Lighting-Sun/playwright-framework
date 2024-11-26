@@ -84,4 +84,15 @@ class LoginPage extends basePage {
             return obtainedText;
         })
     }
+
+    public async getLoginLogoText (): Promise<string | null>{
+        return test.step(`getting login logo text`, async () => {
+            const obtainedText: string | null = await this.playWrightFactory.getText(this.locators.loginLogo)
+            this._testInfo.attach(`getting login logo text`,{
+                body: `getting login logo text`,
+                contentType: "text/plain"
+            })
+            return obtainedText;
+        })
+    }
 }
