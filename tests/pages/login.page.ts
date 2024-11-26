@@ -73,4 +73,15 @@ class LoginPage extends basePage {
             })
         })
     }
+
+    public async getLoginErrorMessage (): Promise<string | null>{
+        return test.step(`getting login error message`, async () => {
+            const obtainedText: string | null = await this.playWrightFactory.getText(this.locators.loginErrorMessage)
+            this._testInfo.attach(`Getting error message`,{
+                body: `Getting loggin error message`,
+                contentType: "text/plain"
+            })
+            return obtainedText;
+        })
+    }
 }
