@@ -2,7 +2,7 @@ import basePage from "./basePage";
 import {Page, TestInfo, test} from "@playwright/test"
 
 
-class LoginPage extends basePage {
+export class LoginPage extends basePage {
 
     private readonly _url: string;
 
