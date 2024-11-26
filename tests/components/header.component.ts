@@ -45,4 +45,11 @@ class Header extends BaseComponent {
         })
     }
 
+    public async clickOnSortFilterDropdownOption(strValue: string) {
+        await test.step(`Clicking on sort dropdown with value ${strValue}`, async () => {
+            await this.playWrightFactory.click(this.locators.sortFilterDropdown);
+            await this.playWrightFactory.selectOptionFromSelect(this.locators.sortFilterDropdown, strValue);
+        })
+    }
+
 }
