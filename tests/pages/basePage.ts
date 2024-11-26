@@ -1,7 +1,6 @@
 import {Page, TestInfo} from "@playwright/test"
 import { PlaywrightFactory } from "../utils/playwrightFactory.utils"
 
-
 /**
 * main page object containing all methods, selectors and functionality
 * that is shared across all page objects
@@ -9,8 +8,8 @@ import { PlaywrightFactory } from "../utils/playwrightFactory.utils"
 
 export default class basePage {
 
-    private readonly _page: Page;
-    private readonly _testInfo: TestInfo;
+    protected readonly _page: Page;
+    protected readonly _testInfo: TestInfo;
     playWrightFactory : PlaywrightFactory;
 
     constructor(page: Page, testInfo: TestInfo){
