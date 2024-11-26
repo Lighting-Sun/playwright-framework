@@ -39,4 +39,10 @@ class Header extends BaseComponent {
         })
     }
 
+    public async clickOnBurgerMenuBtn(): Promise<void> {
+        await test.step(`Clicking on burger button`, async () => {
+            await this.playWrightFactory.click(this.locators.burgerMenuBtn);
+        })
+    }
+
 }
