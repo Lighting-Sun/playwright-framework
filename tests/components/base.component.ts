@@ -1,7 +1,7 @@
 import { Page, TestInfo } from "@playwright/test";
 import { PlaywrightFactory } from "../utils/playwrightFactory.utils";
 
-class BaseComponent {
+export class BaseComponent {
 
     protected readonly _page: Page;
     protected readonly _testInfo: TestInfo;
