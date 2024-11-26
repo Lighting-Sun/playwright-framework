@@ -1,13 +1,15 @@
 import { Page, TestInfo, test } from "@playwright/test";
 import { BaseComponent } from "./base.component";
+import { SideMenu } from "./sidemenu.component";
 
 
 export class Header extends BaseComponent {
 
-
     constructor(page: Page, testInfo: TestInfo) {
         super(page, testInfo);
     }
+
+    SideMenu: SideMenu = new SideMenu(this._page, this._testInfo)
 
     locators = {
         burgerMenuBtn: {
