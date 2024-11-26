@@ -52,4 +52,10 @@ class Header extends BaseComponent {
         })
     }
 
+    public async clickOnShoppingCartBtn() {
+        await test.step(`Clicking on shopping cart button`, async () => {
+            await this.playWrightFactory.click(this.locators.shoppingCartBtn);
+        })
+    }
+
 }
