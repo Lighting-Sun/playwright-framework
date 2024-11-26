@@ -1,7 +1,10 @@
+import { Header } from "../components/header.component";
 import basePage from "./basePage";
 import { Page, TestInfo, test } from "@playwright/test"
 
 export class InventoryPage extends basePage {
+
+    header = new Header(this._page, this._testInfo);
 
     locators = {
         inventoryItemLabelFromName: {
@@ -48,5 +51,12 @@ export class InventoryPage extends basePage {
 
     constructor(page: Page, testInfo: TestInfo) {
         super(page, testInfo);
+    }
+
+    public async clickAddToCartByItemName(strItemName: string): Promise<void> {
+        await test.step(`clicking on login button`, async () => {
+            const element = await this.playWrightFactory.getSelectorByValue(this.locators.addToCartButtonBasedOnItemName, strItemName);
+            await this.playWrightFactory.click(element);
+        })
     }
 }
