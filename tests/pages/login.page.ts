@@ -63,4 +63,14 @@ class LoginPage extends basePage {
             })
         })
     }
+
+    public async clickOnLoginBtn (): Promise<void>{
+        test.step(`clicking on login button`, async () => {
+            await this.playWrightFactory.click(this.locators.loginButton);
+            this._testInfo.attach(`clicking on login button`,{
+                body: `clicking on login button`,
+                contentType: "text/plain"
+            })
+        })
+    }
 }
