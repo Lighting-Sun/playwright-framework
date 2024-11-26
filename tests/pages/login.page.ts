@@ -1,5 +1,5 @@
 import basePage from "./basePage";
-import {Page, TestInfo, test} from "@playwright/test"
+import { Page, TestInfo, test } from "@playwright/test"
 
 
 export class LoginPage extends basePage {
@@ -29,55 +29,55 @@ export class LoginPage extends basePage {
         },
     };
 
-    constructor (page: Page, testInfo: TestInfo){
+    constructor(page: Page, testInfo: TestInfo) {
         super(page, testInfo)
         this._url = "https://www.saucedemo.com/"
     }
 
-    public async openPage() : Promise<void> {
-        test.step(`Opening page ${this._url}`, async () : Promise<void> => {
+    public async openPage(): Promise<void> {
+        await test.step(`Opening page ${this._url}`, async (): Promise<void> => {
             await this._page.goto(this._url);
-            this._testInfo.attach(`Opening page ${this._url}`,{
-                body:`Opening page ${this._url}`,
+            this._testInfo.attach(`Opening page ${this._url}`, {
+                body: `Opening page ${this._url}`,
                 contentType: "text/plain"
             })
         })
     }
 
-    public async fillUsername (username: string): Promise<void>{
-        test.step(`filling username with value ${username}`, async () => {
-            await this.playWrightFactory.setValue(this.locators.usernameInput,username);
-            this._testInfo.attach(`filling username with value ${username}`,{
+    public async fillUsername(username: string): Promise<void> {
+        await test.step(`filling username with value ${username}`, async () => {
+            await this.playWrightFactory.setValue(this.locators.usernameInput, username);
+            this._testInfo.attach(`filling username with value ${username}`, {
                 body: `filling username with value ${username}`,
                 contentType: "text/plain"
             })
         })
     }
 
-    public async fillPassword (password: string): Promise<void>{
-        test.step(`filling username with value ${password}`, async () => {
-            await this.playWrightFactory.setValue(this.locators.usernameInput,password);
-            this._testInfo.attach(`filling username with value ${password}`,{
+    public async fillPassword(password: string): Promise<void> {
+        await test.step(`filling username with value ${password}`, async () => {
+            await this.playWrightFactory.setValue(this.locators.passwordInput, password);
+            this._testInfo.attach(`filling username with value ${password}`, {
                 body: `filling username with value ${password}`,
                 contentType: "text/plain"
             })
         })
     }
 
-    public async clickOnLoginBtn (): Promise<void>{
-        test.step(`clicking on login button`, async () => {
+    public async clickOnLoginBtn(): Promise<void> {
+        await test.step(`clicking on login button`, async () => {
             await this.playWrightFactory.click(this.locators.loginButton);
-            this._testInfo.attach(`clicking on login button`,{
+            this._testInfo.attach(`clicking on login button`, {
                 body: `clicking on login button`,
                 contentType: "text/plain"
             })
         })
     }
 
-    public async getLoginErrorMessage (): Promise<string | null>{
-        return test.step(`getting login error message`, async () => {
+    public async getLoginErrorMessage(): Promise<string | null> {
+        return await test.step(`getting login error message`, async () => {
             const obtainedText: string | null = await this.playWrightFactory.getText(this.locators.loginErrorMessage)
-            this._testInfo.attach(`Getting error message`,{
+            this._testInfo.attach(`Getting error message`, {
                 body: `Getting loggin error message`,
                 contentType: "text/plain"
             })
@@ -85,10 +85,10 @@ export class LoginPage extends basePage {
         })
     }
 
-    public async getLoginLogoText (): Promise<string | null>{
-        return test.step(`getting login logo text`, async () => {
+    public async getLoginLogoText(): Promise<string | null> {
+        return await test.step(`getting login logo text`, async () => {
             const obtainedText: string | null = await this.playWrightFactory.getText(this.locators.loginLogo)
-            this._testInfo.attach(`getting login logo text`,{
+            this._testInfo.attach(`getting login logo text`, {
                 body: `getting login logo text`,
                 contentType: "text/plain"
             })
