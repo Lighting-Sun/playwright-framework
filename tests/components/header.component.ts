@@ -1,4 +1,4 @@
-import { Page, TestInfo } from "@playwright/test";
+import { Page, TestInfo, test } from "@playwright/test";
 import { BaseComponent } from "./base.component";
 
 
@@ -32,6 +32,11 @@ class Header extends BaseComponent {
         }
     };
 
-
+    public async getPageTitleText(): Promise<string | null> {
+        return await test.step(`Getting page title text`, async () => {
+            const headerPageTitle: (string | null) = await this.playWrightFactory.getText(this.locators.pageTitle);
+            return headerPageTitle;
+        })
+    }
 
 }
