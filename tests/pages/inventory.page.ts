@@ -76,4 +76,10 @@ export class InventoryPage extends basePage {
             return await this.playWrightFactory.getText(await this.playWrightFactory.getSelectorByValue(this.locators.inventoryItemPriceIndex, index));
         })
     }
+
+    public async getInventoryNameFromIndexText(index: string) {
+        return test.step(`Getting Inventory name from ${index} text`, async () => {
+            return await this.playWrightFactory.getText(await this.playWrightFactory.getSelectorByValue(this.locators.inventoryItemNameIndex, index));
+        })
+    }
 }
