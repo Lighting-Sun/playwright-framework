@@ -88,4 +88,16 @@ export class InventoryPage extends basePage {
             await this.playWrightFactory.click(await this.playWrightFactory.getSelectorByValue(this.locators.inventoryItemNameIndex, index));
         })
     }
+
+    public async AddItemToCartByIndex(index: string): Promise<any> {
+        await test.step(`Adding item to cart using index ${index}`, async () => {
+            const itemNameText = await this.getInventoryNameFromIndexText(index);
+            const itemPriceText = await this.getInventoryPriceFromIndexText(index);
+            await this.clickAddCartItemButtonFromIndex(index);
+            return {
+                itemName: itemNameText,
+                itemPrice: itemPriceText,
+            };
+        })
+    }
 }
