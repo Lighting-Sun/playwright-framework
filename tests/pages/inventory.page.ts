@@ -59,4 +59,15 @@ export class InventoryPage extends basePage {
             await this.playWrightFactory.click(element);
         })
     }
+
+    public async getTextFromPrices(): Promise<string[]> {
+        return test.step('getting text from prices', async () => {
+            const textFromPrices = await this.playWrightFactory.getTextFromElements(this.locators.inventoryItemPrice);
+            const trimmedPrice: string[] = textFromPrices.map(textToTrim => {
+                const trimmedText = textToTrim || '';
+                return trimmedText.slice(1);
+            });
+            return trimmedPrice;
+        })
+    }
 }
