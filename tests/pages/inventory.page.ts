@@ -100,4 +100,10 @@ export class InventoryPage extends basePage {
             };
         })
     }
+
+    public async getNumberOfItems(): Promise<number> {
+        return await test.step(`Getting the number of items`, async () => {
+            return (await this.playWrightFactory.getElements(this.locators.inventoryItemCard)).length;
+        })
+    }
 }
