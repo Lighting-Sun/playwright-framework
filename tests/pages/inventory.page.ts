@@ -70,4 +70,10 @@ export class InventoryPage extends basePage {
             return trimmedPrice;
         })
     }
+
+    public async getInventoryPriceFromIndexText(index: string) {
+        return test.step(`Getting Inventory price from index ${index} text`, async () => {
+            return await this.playWrightFactory.getText(await this.playWrightFactory.getSelectorByValue(this.locators.inventoryItemPriceIndex, index));
+        })
+    }
 }
