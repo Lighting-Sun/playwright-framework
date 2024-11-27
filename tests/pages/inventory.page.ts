@@ -61,7 +61,7 @@ export class InventoryPage extends basePage {
     }
 
     public async getTextFromPrices(): Promise<string[]> {
-        return test.step('getting text from prices', async () => {
+        return await test.step('getting text from prices', async () => {
             const textFromPrices = await this.playWrightFactory.getTextFromElements(this.locators.inventoryItemPrice);
             const trimmedPrice: string[] = textFromPrices.map(textToTrim => {
                 const trimmedText = textToTrim || '';
@@ -71,15 +71,21 @@ export class InventoryPage extends basePage {
         })
     }
 
-    public async getInventoryPriceFromIndexText(index: string) {
-        return test.step(`Getting Inventory price from index ${index} text`, async () => {
+    public async getInventoryPriceFromIndexText(index: string): Promise<string | null> {
+        return await test.step(`Getting Inventory price from index ${index} text`, async () => {
             return await this.playWrightFactory.getText(await this.playWrightFactory.getSelectorByValue(this.locators.inventoryItemPriceIndex, index));
         })
     }
 
-    public async getInventoryNameFromIndexText(index: string) {
-        return test.step(`Getting Inventory name from ${index} text`, async () => {
+    public async getInventoryNameFromIndexText(index: string): Promise<string | null> {
+        return await test.step(`Getting Inventory name from index ${index} text`, async () => {
             return await this.playWrightFactory.getText(await this.playWrightFactory.getSelectorByValue(this.locators.inventoryItemNameIndex, index));
+        })
+    }
+
+    public async clickAddCartItemButtonFromIndex(index: string): Promise<void> {
+        await test.step(`Clicking add cart item button from index ${index}`, async () => {
+            await this.playWrightFactory.click(await this.playWrightFactory.getSelectorByValue(this.locators.inventoryItemNameIndex, index));
         })
     }
 }
