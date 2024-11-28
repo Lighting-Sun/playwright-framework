@@ -9,7 +9,7 @@ export class Header extends BaseComponent {
         super(page, testInfo);
     }
 
-    SideMenu: SideMenu = new SideMenu(this._page, this._testInfo)
+    sideMenu: SideMenu = new SideMenu(this._page, this._testInfo)
 
     locators = {
         burgerMenuBtn: {
