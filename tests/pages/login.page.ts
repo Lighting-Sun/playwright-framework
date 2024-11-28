@@ -1,3 +1,4 @@
+import { Header } from "../components/header.component";
 import basePage from "./basePage";
 import { Page, TestInfo, test } from "@playwright/test"
 
@@ -5,6 +6,8 @@ import { Page, TestInfo, test } from "@playwright/test"
 export class LoginPage extends basePage {
 
     private readonly _url: string;
+
+    header = new Header(this._page, this._testInfo);
 
     locators = {
         loginButton: {
