@@ -1,6 +1,7 @@
 import { Header } from "../components/header.component";
 import basePage from "./basePage";
 import { Page, TestInfo, test } from "@playwright/test"
+import UtilsMethods from "../utils/utilsMethods.utils";
 
 export class InventoryPage extends basePage {
 
@@ -89,8 +90,10 @@ export class InventoryPage extends basePage {
         })
     }
 
-    public async AddItemToCartByIndex(index: string): Promise<any> {
-        await test.step(`Adding item to cart using index ${index}`, async () => {
+
+    public async AddItemToCartByIndex(index: string): Promise<{ itemName: string | null; itemPrice: string | null }> {
+
+        return await test.step(`Adding item to cart using index ${index}`, async () => {
             const itemNameText = await this.getInventoryNameFromIndexText(index);
             const itemPriceText = await this.getInventoryPriceFromIndexText(index);
             await this.clickAddCartItemButtonFromIndex(index);
@@ -104,6 +107,19 @@ export class InventoryPage extends basePage {
     public async getNumberOfItems(): Promise<number> {
         return await test.step(`Getting the number of items`, async () => {
             return (await this.playWrightFactory.getElements(this.locators.inventoryItemCard)).length;
+        })
+    }
+
+    public async addRandomItemsToCart(): Promise<{ itemName: string | null; itemPrice: string | null }[]> {
+        return await test.step(`Getting the number of items`, async () => {
+            const detailsPromises: Promise<{ itemName: string | null; itemPrice: string | null }>[] = [];
+            const numberOfItems = await this.getNumberOfItems();
+            const indexesToAdd = UtilsMethods.getSetFromRange(1, numberOfItems, UtilsMethods.getRandomNumber(1, numberOfItems));
+            for await (const index of indexesToAdd) {
+                detailsPromises.push(this.AddItemToCartByIndex(index.toString()));
+            }
+            const itemDetails = await Promise.all(detailsPromises);
+            return itemDetails;
         })
     }
 }
