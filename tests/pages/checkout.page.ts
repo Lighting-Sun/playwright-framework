@@ -53,4 +53,12 @@ export class CheckoutPage extends BasePage {
             await this.playWrightFactory.click(this.locators.continueButton);
         });
     }
+
+    async fillPersonalInformationForm(firstName: string, lastName: string, postalCode: string): Promise<void> {
+        test.step(`Filling personal information form`, async () => {
+            await this.fillFirstName(firstName);
+            await this.fillLastName(lastName);
+            await this.fillPostalCode(postalCode);
+        });
+    }
 }
