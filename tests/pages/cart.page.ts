@@ -1,7 +1,6 @@
 import { Header } from "../components/header.component";
 import BasePage from "./basePage";
 import { Page, TestInfo, test } from "@playwright/test"
-import UtilsMethods from "../utils/utilsMethods.utils";
 
 
 export class CartPage extends BasePage {
@@ -41,5 +40,15 @@ export class CartPage extends BasePage {
         return test.step(`Getting item cart names`, async () => {
             return await this.playWrightFactory.getTextFromElements(this.locators.itemCartPrices);
         })
+    }
+
+    public async removeAllItemsFromCart(): Promise<void> {
+        return test.step(`Removing all items from cart`, async () => {
+            await this.playWrightFactory.clickAllIfExists(this.locators.itemCartRemoveButton);
+        });
+    }
+
+    public async clickOnCheckoutButton(): Promise<void> {
+        await this.playWrightFactory.click(this.locators.checkoutButton);
     }
 }
