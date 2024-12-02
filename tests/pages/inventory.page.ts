@@ -152,4 +152,16 @@ export class InventoryPage extends basePage {
             return await this.playWrightFactory.click(selector);
         })
     }
+
+    public async AddItemToCartByName(value: string): Promise<ItemDetails> {
+        return await test.step(`Adding an Item to cart by name: ${value}`, async () => {
+            const itemNameText = await this.getInventoryItemNameByNameText(value);
+            const itemPriceText = await this.getInventoryItemPriceByNameText(value);
+            await this.clickInventoryItemAddToCartByName(value);
+            return {
+                itemName: itemNameText,
+                itemPrice: itemPriceText,
+            };
+        });
+    }
 }
