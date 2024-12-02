@@ -126,9 +126,30 @@ export class InventoryPage extends basePage {
         })
     }
 
-    public async getProperyValuesFromArrayOfDetails(arrOfItemDetail: ItemDetails[], strPropertyToGet: 'itemName' | 'itemPrice') {
+    public async getProperyValuesFromArrayOfDetails(arrOfItemDetail: ItemDetails[], strPropertyToGet: 'itemName' | 'itemPrice'): Promise<(string | null)[]> {
         return await test.step(`Getting property ${strPropertyToGet} from item details array`, async () => {
             return arrOfItemDetail.map(detail => detail[strPropertyToGet]);
+        })
+    }
+
+    public async getInventoryItemNameByNameText(value: string): Promise<string | null> {
+        return await test.step(`Getting Inventory item Name by Name text: ${value}`, async () => {
+            const selector = await this.playWrightFactory.getSelectorByValue(this.locators.inventoryItemNameByName, value);
+            return await this.playWrightFactory.getText(selector);
+        })
+    }
+
+    public async getInventoryItemPriceByNameText(value: string): Promise<string | null> {
+        return await test.step(`Getting Inventory item Price by Name text: ${value}`, async () => {
+            const selector = await this.playWrightFactory.getSelectorByValue(this.locators.inventoryItemPriceByName, value);
+            return await this.playWrightFactory.getText(selector);
+        })
+    }
+
+    public async clickInventoryItemAddToCartByName(value: string): Promise<void> {
+        return await test.step(`Clicking on Inventory item Add to Cart btn by Name text: ${value}`, async () => {
+            const selector = await this.playWrightFactory.getSelectorByValue(this.locators.inventoryAddToCartButtonByName, value);
+            return await this.playWrightFactory.click(selector);
         })
     }
 }
