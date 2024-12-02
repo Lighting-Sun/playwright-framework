@@ -9,4 +9,23 @@ export class OverviewPage extends BasePage {
     }
 
     header = new Header(this._page, this._testInfo);
+
+    locators = {
+        finishButton: {
+            selector: "#finish",
+            description: "finish purchase button",
+        },
+        overviewItemNames: {
+            selector: "div[data-test='inventory-item-name']",
+            description: "overview page item name",
+        },
+        overviewItemPrices: {
+            selector: "div[data-test='inventory-item-price']",
+            description: "overview page item price",
+        },
+        subTotalLabel: {
+            selector: "div[data-test='subtotal-label']",
+            description: "sub total label",
+        },
+    };
 }
