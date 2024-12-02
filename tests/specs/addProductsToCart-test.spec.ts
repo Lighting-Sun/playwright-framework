@@ -29,3 +29,25 @@ test('Should add and validate multiple items added to cart', async ({ page }) =>
     expect(inventoryPrices).toEqual(cartPrices);
     await cartPage.removeAllItemsFromCart();
 });
+
+test('Should add and validate a single specific item to cart', async ({ page }) => {
+    const loginPage = new LoginPage(page, test.info());
+    const inventoryPage = new InventoryPage(page, test.info());
+    const cartPage = new CartPage(page, test.info());
+
+    await loginPage.openPage();
+    await loginPage.loginWithCredentials(data.users.validUser.username, data.users.validUser.password);
+    await expect(page).toHaveURL(/inventory/);
+    expect(await inventoryPage.header.getPageTitleText()).toEqual('Products');
+    const result = await inventoryPage.AddItemToCartByName(data.products.sauceLabsOnesie);
+    const inventoryName = result.itemName;
+    const inventoryPrice = result.itemPrice;
+    await inventoryPage.header.clickOnShoppingCartBtn();
+    await expect(page).toHaveURL(/cart/);
+    expect(await inventoryPage.header.getPageTitleText()).toEqual('Your Cart');
+    const cartName = await cartPage.getItemCartNames();
+    const cartPrice = await cartPage.getItemCartPrices();
+    expect([inventoryName]).toEqual(cartName);
+    expect([inventoryPrice]).toEqual(cartPrice);
+    await cartPage.removeAllItemsFromCart();
+});
