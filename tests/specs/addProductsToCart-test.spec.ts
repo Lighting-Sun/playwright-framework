@@ -16,6 +16,10 @@ test('Should add and validate multiple items added to cart', async ({ page }) =>
     await expect(page).toHaveURL(/inventory/);
     expect(await inventoryPage.header.getPageTitleText()).toEqual('Products');
     const result = await inventoryPage.addRandomItemsToCart();
-    const inventoryNames = await inventoryPage.getProperyValuesFromArrayOfDetails(result, 'itemName')
-    console.log(inventoryNames);
+    const inventoryNames = await inventoryPage.getProperyValuesFromArrayOfDetails(result, 'itemName');
+    const inventoryPrices = await inventoryPage.getProperyValuesFromArrayOfDetails(result, 'itemPrice');
+    await inventoryPage.header.clickOnShoppingCartBtn();
+    await expect(page).toHaveURL(/cart/);
+    expect(await inventoryPage.header.getPageTitleText()).toEqual('Your Cart');
+    //need to implement cart page
 });
