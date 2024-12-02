@@ -1,8 +1,13 @@
 import { Header } from "../components/header.component";
-import basePage from "./basePage";
+import BasePage from "./basePage";
 import { Page, TestInfo, test } from "@playwright/test"
+import UtilsMethods from "../utils/utilsMethods.utils";
 
-export class InventoryPage extends basePage {
+export type ItemDetails = {
+    itemName: string | null;
+    itemPrice: string | null;
+}
+export class InventoryPage extends BasePage {
 
     header = new Header(this._page, this._testInfo);
 
@@ -85,12 +90,13 @@ export class InventoryPage extends basePage {
 
     public async clickAddCartItemButtonFromIndex(index: string): Promise<void> {
         await test.step(`Clicking add cart item button from index ${index}`, async () => {
-            await this.playWrightFactory.click(await this.playWrightFactory.getSelectorByValue(this.locators.inventoryItemNameIndex, index));
+            await this.playWrightFactory.click(await this.playWrightFactory.getSelectorByValue(this.locators.inventoryAddCartItemButtonIndex, index));
         })
     }
 
-    public async AddItemToCartByIndex(index: string): Promise<any> {
-        await test.step(`Adding item to cart using index ${index}`, async () => {
+    public async AddItemToCartByIndex(index: string): Promise<ItemDetails> {
+
+        return await test.step(`Adding item to cart using index ${index}`, async () => {
             const itemNameText = await this.getInventoryNameFromIndexText(index);
             const itemPriceText = await this.getInventoryPriceFromIndexText(index);
             await this.clickAddCartItemButtonFromIndex(index);
@@ -105,5 +111,56 @@ export class InventoryPage extends basePage {
         return await test.step(`Getting the number of items`, async () => {
             return (await this.playWrightFactory.getElements(this.locators.inventoryItemCard)).length;
         })
+    }
+
+    public async addRandomItemsToCart(): Promise<ItemDetails[]> {
+        return await test.step(`Getting the number of items`, async () => {
+            const itemDetails: ItemDetails[] = [];
+            const numberOfItems = await this.getNumberOfItems();
+            const indexesToAdd = UtilsMethods.getSetFromRange(1, numberOfItems, UtilsMethods.getRandomNumber(1, numberOfItems));
+            for await (const index of indexesToAdd) {
+                itemDetails.push(await this.AddItemToCartByIndex(index.toString()));
+            }
+            return itemDetails;
+        })
+    }
+
+    public async getProperyValuesFromArrayOfDetails(arrOfItemDetail: ItemDetails[], strPropertyToGet: 'itemName' | 'itemPrice'): Promise<(string | null)[]> {
+        return await test.step(`Getting property ${strPropertyToGet} from item details array`, async () => {
+            return arrOfItemDetail.map(detail => detail[strPropertyToGet]);
+        })
+    }
+
+    public async getInventoryItemNameByNameText(value: string): Promise<string | null> {
+        return await test.step(`Getting Inventory item Name by Name text: ${value}`, async () => {
+            const selector = await this.playWrightFactory.getSelectorByValue(this.locators.inventoryItemNameByName, value);
+            return await this.playWrightFactory.getText(selector);
+        })
+    }
+
+    public async getInventoryItemPriceByNameText(value: string): Promise<string | null> {
+        return await test.step(`Getting Inventory item Price by Name text: ${value}`, async () => {
+            const selector = await this.playWrightFactory.getSelectorByValue(this.locators.inventoryItemPriceByName, value);
+            return await this.playWrightFactory.getText(selector);
+        })
+    }
+
+    public async clickInventoryItemAddToCartByName(value: string): Promise<void> {
+        return await test.step(`Clicking on Inventory item Add to Cart btn by Name text: ${value}`, async () => {
+            const selector = await this.playWrightFactory.getSelectorByValue(this.locators.inventoryAddToCartButtonByName, value);
+            return await this.playWrightFactory.click(selector);
+        })
+    }
+
+    public async AddItemToCartByName(value: string): Promise<ItemDetails> {
+        return await test.step(`Adding an Item to cart by name: ${value}`, async () => {
+            const itemNameText = await this.getInventoryItemNameByNameText(value);
+            const itemPriceText = await this.getInventoryItemPriceByNameText(value);
+            await this.clickInventoryItemAddToCartByName(value);
+            return {
+                itemName: itemNameText,
+                itemPrice: itemPriceText,
+            };
+        });
     }
 }

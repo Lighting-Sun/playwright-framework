@@ -9,8 +9,8 @@ class UtilsMethods {
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
 
-    public static getSetFromRange(intMinRange: number, intMaxRange: number, intSetSize: number) {
-        const setFromRange = new Set();
+    public static getSetFromRange(intMinRange: number, intMaxRange: number, intSetSize: number): Set<number> {
+        const setFromRange: Set<number> = new Set();
         do {
             let value = this.getRandomNumber(intMinRange, intMaxRange);
             if (!setFromRange.has(value)) {

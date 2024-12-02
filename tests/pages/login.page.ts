@@ -1,9 +1,9 @@
 import { Header } from "../components/header.component";
-import basePage from "./basePage";
+import BasePage from "./basePage";
 import { Page, TestInfo, test } from "@playwright/test"
 
 
-export class LoginPage extends basePage {
+export class LoginPage extends BasePage {
 
     private readonly _url: string;
 
