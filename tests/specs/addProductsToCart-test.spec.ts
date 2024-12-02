@@ -3,6 +3,7 @@ import { LoginPage } from '../pages/login.page';
 import { readFileSync } from 'fs';
 import { InventoryPage } from '../pages/inventory.page';
 import UtilsMethods from '../utils/utilsMethods.utils';
+import { CartPage } from '../pages/cart.page';
 
 const data = JSON.parse(readFileSync('./tests/data/testData.json', 'utf-8'));
 
@@ -10,6 +11,7 @@ const data = JSON.parse(readFileSync('./tests/data/testData.json', 'utf-8'));
 test('Should add and validate multiple items added to cart', async ({ page }) => {
     const loginPage = new LoginPage(page, test.info());
     const inventoryPage = new InventoryPage(page, test.info());
+    const cartPage = new CartPage(page, test.info());
 
     await loginPage.openPage();
     await loginPage.loginWithCredentials(data.users.validUser.username, data.users.validUser.password);
@@ -21,5 +23,9 @@ test('Should add and validate multiple items added to cart', async ({ page }) =>
     await inventoryPage.header.clickOnShoppingCartBtn();
     await expect(page).toHaveURL(/cart/);
     expect(await inventoryPage.header.getPageTitleText()).toEqual('Your Cart');
-    //need to implement cart page
+    const cartNames = await cartPage.getItemCartNames();
+    const cartPrices = await cartPage.getItemCartPrices();
+    expect(inventoryNames).toEqual(cartNames);
+    expect(inventoryPrices).toEqual(cartPrices);
+    await cartPage.removeAllItemsFromCart();
 });

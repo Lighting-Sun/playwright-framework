@@ -115,13 +115,12 @@ export class InventoryPage extends BasePage {
 
     public async addRandomItemsToCart(): Promise<ItemDetails[]> {
         return await test.step(`Getting the number of items`, async () => {
-            const detailsPromises: Promise<ItemDetails>[] = [];
+            const itemDetails: ItemDetails[] = [];
             const numberOfItems = await this.getNumberOfItems();
             const indexesToAdd = UtilsMethods.getSetFromRange(1, numberOfItems, UtilsMethods.getRandomNumber(1, numberOfItems));
             for await (const index of indexesToAdd) {
-                detailsPromises.push(this.AddItemToCartByIndex(index.toString()));
+                itemDetails.push(await this.AddItemToCartByIndex(index.toString()));
             }
-            const itemDetails = await Promise.all(detailsPromises);
             return itemDetails;
         })
     }
