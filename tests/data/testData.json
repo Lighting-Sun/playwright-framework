@@ -14,5 +14,8 @@
         "firstName": "Tester",
         "lastName": "SDET",
         "postalCode": "1223"
+    },
+    "products":{
+        "sauceLabsOnesie":"Sauce Labs Onesie"
     }
 }
