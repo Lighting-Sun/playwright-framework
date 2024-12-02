@@ -6,7 +6,7 @@ import { PlaywrightFactory } from "../utils/playwrightFactory.utils"
 * that is shared across all page objects
 */
 
-export default class basePage {
+export default class BasePage {
 
     protected readonly _page: Page;
     protected readonly _testInfo: TestInfo;

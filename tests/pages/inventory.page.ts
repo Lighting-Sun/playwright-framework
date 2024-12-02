@@ -1,5 +1,5 @@
 import { Header } from "../components/header.component";
-import basePage from "./basePage";
+import BasePage from "./basePage";
 import { Page, TestInfo, test } from "@playwright/test"
 import UtilsMethods from "../utils/utilsMethods.utils";
 
@@ -7,7 +7,7 @@ export type ItemDetails = {
     itemName: string | null;
     itemPrice: string | null;
 }
-export class InventoryPage extends basePage {
+export class InventoryPage extends BasePage {
 
     header = new Header(this._page, this._testInfo);
 
