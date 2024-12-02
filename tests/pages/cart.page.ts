@@ -10,4 +10,24 @@ export class CartPage extends BasePage {
         super(page, testInfo);
     }
 
+    header = new Header(this._page, this._testInfo);
+
+    locators = {
+        itemCartNames: {
+            selector: "div[data-test='inventory-item-name']",
+            description: "item names in cart",
+        },
+        itemCartPrices: {
+            selector: "div[data-test='inventory-item-price']",
+            description: "item prices in cart",
+        },
+        itemCartRemoveButton: {
+            selector: "button[data-test^='remove']",
+            description: "item remove from cart button"
+        },
+        checkoutButton: {
+            selector: "button[data-test='checkout']",
+            description: "checkout button"
+        }
+    };
 }
