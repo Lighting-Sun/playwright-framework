@@ -30,4 +30,16 @@ export class CartPage extends BasePage {
             description: "checkout button"
         }
     };
+
+    public async getItemCartNames(): Promise<(string | null)[]> {
+        return test.step(`Getting item cart names`, async () => {
+            return await this.playWrightFactory.getTextFromElements(this.locators.itemCartNames);
+        })
+    }
+
+    public async getItemCartPrices(): Promise<(string | null)[]> {
+        return test.step(`Getting item cart names`, async () => {
+            return await this.playWrightFactory.getTextFromElements(this.locators.itemCartPrices);
+        })
+    }
 }
