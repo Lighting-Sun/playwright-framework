@@ -54,7 +54,7 @@ export class CheckoutPage extends BasePage {
         });
     }
 
-    async fillPersonalInformationForm(firstName: string, lastName: string, postalCode: string): Promise<void> {
+    public async fillPersonalInformationForm(firstName: string, lastName: string, postalCode: string): Promise<void> {
         test.step(`Filling personal information form`, async () => {
             await this.fillFirstName(firstName);
             await this.fillLastName(lastName);
