@@ -3,6 +3,10 @@ import basePage from "./basePage";
 import { Page, TestInfo, test } from "@playwright/test"
 import UtilsMethods from "../utils/utilsMethods.utils";
 
+export type ItemDetails = {
+    itemName: string | null;
+    itemPrice: string | null;
+}
 export class InventoryPage extends basePage {
 
     header = new Header(this._page, this._testInfo);
@@ -86,12 +90,11 @@ export class InventoryPage extends basePage {
 
     public async clickAddCartItemButtonFromIndex(index: string): Promise<void> {
         await test.step(`Clicking add cart item button from index ${index}`, async () => {
-            await this.playWrightFactory.click(await this.playWrightFactory.getSelectorByValue(this.locators.inventoryItemNameIndex, index));
+            await this.playWrightFactory.click(await this.playWrightFactory.getSelectorByValue(this.locators.inventoryAddCartItemButtonIndex, index));
         })
     }
 
-
-    public async AddItemToCartByIndex(index: string): Promise<{ itemName: string | null; itemPrice: string | null }> {
+    public async AddItemToCartByIndex(index: string): Promise<ItemDetails> {
 
         return await test.step(`Adding item to cart using index ${index}`, async () => {
             const itemNameText = await this.getInventoryNameFromIndexText(index);
@@ -110,9 +113,9 @@ export class InventoryPage extends basePage {
         })
     }
 
-    public async addRandomItemsToCart(): Promise<{ itemName: string | null; itemPrice: string | null }[]> {
+    public async addRandomItemsToCart(): Promise<ItemDetails[]> {
         return await test.step(`Getting the number of items`, async () => {
-            const detailsPromises: Promise<{ itemName: string | null; itemPrice: string | null }>[] = [];
+            const detailsPromises: Promise<ItemDetails>[] = [];
             const numberOfItems = await this.getNumberOfItems();
             const indexesToAdd = UtilsMethods.getSetFromRange(1, numberOfItems, UtilsMethods.getRandomNumber(1, numberOfItems));
             for await (const index of indexesToAdd) {
@@ -120,6 +123,12 @@ export class InventoryPage extends basePage {
             }
             const itemDetails = await Promise.all(detailsPromises);
             return itemDetails;
+        })
+    }
+
+    public async getProperyValuesFromArrayOfDetails(arrOfItemDetail: ItemDetails[], strPropertyToGet: 'itemName' | 'itemPrice') {
+        return await test.step(`Getting property ${strPropertyToGet} from item details array`, async () => {
+            return arrOfItemDetail.map(detail => detail[strPropertyToGet]);
         })
     }
 }

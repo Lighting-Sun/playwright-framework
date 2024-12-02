@@ -11,7 +11,11 @@ test('Should add and validate multiple items added to cart', async ({ page }) =>
     const loginPage = new LoginPage(page, test.info());
     const inventoryPage = new InventoryPage(page, test.info());
 
+    await loginPage.openPage();
     await loginPage.loginWithCredentials(data.users.validUser.username, data.users.validUser.password);
     await expect(page).toHaveURL(/inventory/);
     expect(await inventoryPage.header.getPageTitleText()).toEqual('Products');
+    const result = await inventoryPage.addRandomItemsToCart();
+    const inventoryNames = await inventoryPage.getProperyValuesFromArrayOfDetails(result, 'itemName')
+    console.log(inventoryNames);
 });
