@@ -1,4 +1,4 @@
-import { Page, TestInfo } from "@playwright/test";
+import { Page, TestInfo, test } from "@playwright/test";
 import BasePage from "./basePage"
 import { Header } from "../components/header.component";
 
@@ -29,4 +29,28 @@ export class CheckoutPage extends BasePage {
         },
     };
 
+
+    public async fillFirstName(firstName: string): Promise<void> {
+        test.step(`Filling first name for checkout`, async () => {
+            await this.playWrightFactory.setValue(this.locators.firstNameInput, firstName);
+        });
+    }
+
+    public async fillLastName(lastName: string): Promise<void> {
+        test.step(`Filling first name for checkout`, async () => {
+            await this.playWrightFactory.setValue(this.locators.lastNameInput, lastName);
+        });
+    }
+
+    public async fillPostalCode(postalCode: string): Promise<void> {
+        test.step(`Filling postal code for checkout`, async () => {
+            await this.playWrightFactory.setValue(this.locators.postalCodeInput, postalCode);
+        });
+    }
+
+    public async clickContinueButton(): Promise<void> {
+        test.step(`Clicking on continue button`, async () => {
+            await this.playWrightFactory.click(this.locators.continueButton);
+        });
+    }
 }
