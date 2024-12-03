@@ -1,4 +1,4 @@
-import { Page, TestInfo } from "@playwright/test";
+import { Page, TestInfo, test } from "@playwright/test";
 import BasePage from "./basePage";
 import { Header } from "../components/header.component";
 
@@ -28,4 +28,25 @@ export class OverviewPage extends BasePage {
             description: "sub total label",
         },
     };
+
+    public async getValuesFromPrices(): Promise<number[]> {
+        return await test.step(`Getting values from item prices`, async () => {
+            const textFromPrices: (string | null)[] = await this.playWrightFactory.getTextFromElements(this.locators.overviewItemPrices);
+            const trimmedPrice: number[] = textFromPrices.map(textToTrim => textToTrim?.slice(1)).map(Number);
+            return trimmedPrice;
+        })
+    }
+
+    async getTextFromPrices(): Promise<(string | null)[]> {
+        return await test.step(`Getting text from item prices`, async () => {
+            const textFromPrices: (string | null)[] = await this.playWrightFactory.getTextFromElements(this.locators.overviewItemPrices);
+            return textFromPrices;
+        })
+    }
+
+    async getItemOverviewNames(): Promise<(string | null)[]> {
+        return await test.step(`Getting item overview names`, async () => {
+            return await this.playWrightFactory.getTextFromElements(this.locators.overviewItemNames);
+        })
+    }
 }
