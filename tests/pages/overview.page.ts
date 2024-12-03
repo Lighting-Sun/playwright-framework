@@ -37,16 +37,29 @@ export class OverviewPage extends BasePage {
         })
     }
 
-    async getTextFromPrices(): Promise<(string | null)[]> {
+    public async getTextFromPrices(): Promise<(string | null)[]> {
         return await test.step(`Getting text from item prices`, async () => {
             const textFromPrices: (string | null)[] = await this.playWrightFactory.getTextFromElements(this.locators.overviewItemPrices);
             return textFromPrices;
         })
     }
 
-    async getItemOverviewNames(): Promise<(string | null)[]> {
+    public async getItemOverviewNames(): Promise<(string | null)[]> {
         return await test.step(`Getting item overview names`, async () => {
             return await this.playWrightFactory.getTextFromElements(this.locators.overviewItemNames);
+        })
+    }
+
+    public async getSubTotalValue(): Promise<number> {
+        return await test.step(`Getting sub total value`, async () => {
+            const subTotalText = (await this.playWrightFactory.getText(this.locators.subTotalLabel) ?? "").replace('Item total: $', '');
+            return Number(subTotalText);
+        })
+    }
+
+    async clickOnFinishButton(): Promise<void> {
+        return await test.step(`Clicking on finish button`, async () => {
+            await this.playWrightFactory.click(this.locators.finishButton);
         })
     }
 }
