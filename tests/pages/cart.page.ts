@@ -31,24 +31,26 @@ export class CartPage extends BasePage {
     };
 
     public async getItemCartNames(): Promise<(string | null)[]> {
-        return test.step(`Getting item cart names`, async () => {
+        return await test.step(`Getting item cart names`, async () => {
             return await this.playWrightFactory.getTextFromElements(this.locators.itemCartNames);
         })
     }
 
     public async getItemCartPrices(): Promise<(string | null)[]> {
-        return test.step(`Getting item cart names`, async () => {
+        return await test.step(`Getting item cart names`, async () => {
             return await this.playWrightFactory.getTextFromElements(this.locators.itemCartPrices);
         })
     }
 
     public async removeAllItemsFromCart(): Promise<void> {
-        return test.step(`Removing all items from cart`, async () => {
+        return await test.step(`Removing all items from cart`, async () => {
             await this.playWrightFactory.clickAllIfExists(this.locators.itemCartRemoveButton);
         });
     }
 
     public async clickOnCheckoutButton(): Promise<void> {
-        await this.playWrightFactory.click(this.locators.checkoutButton);
+        return await test.step(`Clicking on checkout button`, async () => {
+            await this.playWrightFactory.click(this.locators.checkoutButton);
+        })
     }
 }

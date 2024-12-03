@@ -1,6 +1,5 @@
-import { Page, TestInfo } from "@playwright/test";
+import { Page, TestInfo, test } from "@playwright/test";
 import BasePage from "./basePage";
-import test from "node:test";
 import { Header } from "../components/header.component";
 
 
@@ -20,6 +19,9 @@ export class CompletePage extends BasePage {
     };
 
     public async getCompletePurchaseText(): Promise<string | null> {
-        return this.playWrightFactory.getText(this.locators.completePurchaseHeader);
+        return await test.step(`Getting complete purchase text`, async () => {
+            return this.playWrightFactory.getText(this.locators.completePurchaseHeader);
+        })
+
     }
 }

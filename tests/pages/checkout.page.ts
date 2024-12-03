@@ -31,31 +31,31 @@ export class CheckoutPage extends BasePage {
 
 
     public async fillFirstName(firstName: string): Promise<void> {
-        test.step(`Filling first name for checkout`, async () => {
+        await test.step(`Filling first name for checkout`, async () => {
             await this.playWrightFactory.setValue(this.locators.firstNameInput, firstName);
         });
     }
 
     public async fillLastName(lastName: string): Promise<void> {
-        test.step(`Filling first name for checkout`, async () => {
+        await test.step(`Filling first name for checkout`, async () => {
             await this.playWrightFactory.setValue(this.locators.lastNameInput, lastName);
         });
     }
 
     public async fillPostalCode(postalCode: string): Promise<void> {
-        test.step(`Filling postal code for checkout`, async () => {
+        await test.step(`Filling postal code for checkout`, async () => {
             await this.playWrightFactory.setValue(this.locators.postalCodeInput, postalCode);
         });
     }
 
     public async clickContinueButton(): Promise<void> {
-        test.step(`Clicking on continue button`, async () => {
+        await test.step(`Clicking on continue button`, async () => {
             await this.playWrightFactory.click(this.locators.continueButton);
         });
     }
 
     public async fillPersonalInformationForm(firstName: string, lastName: string, postalCode: string): Promise<void> {
-        test.step(`Filling personal information form`, async () => {
+        await test.step(`Filling personal information form`, async () => {
             await this.fillFirstName(firstName);
             await this.fillLastName(lastName);
             await this.fillPostalCode(postalCode);
