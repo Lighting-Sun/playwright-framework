@@ -12,4 +12,14 @@ export class CompletePage extends BasePage {
 
     header = new Header(this._page, this._testInfo);
 
+    locators = {
+        completePurchaseHeader: {
+            selector: "//h2[@class='complete-header']",
+            description: "complete purchase h2",
+        },
+    };
+
+    public async getCompletePurchaseText(): Promise<string | null> {
+        return this.playWrightFactory.getText(this.locators.completePurchaseHeader);
+    }
 }
