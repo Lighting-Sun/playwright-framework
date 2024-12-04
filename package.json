@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "npx playwright test",
-    "open-report": "npx playwright show-report"
+    "open-report": "npx playwright show-report",
+    "test-chrome": "npx playwright test --project=chromium",
+    "test-firefox": "npx playwright test --project=firefox",
+    "test-webkit": "npx playwright test --project=webkit"
   },
   "keywords": [],
   "author": "",
