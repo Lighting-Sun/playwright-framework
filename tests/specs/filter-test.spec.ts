@@ -4,7 +4,9 @@ import { readFileSync } from 'fs';
 import { InventoryPage } from '../pages/inventory.page';
 import UtilsMethods from '../utils/utilsMethods.utils';
 
-test('Should successfully sort products', async ({ page }) => {
+test('Should successfully sort products', {
+    tag: ['@regression']
+}, async ({ page }) => {
 
     const data = JSON.parse(readFileSync('./tests/data/testData.json', 'utf-8'));
 

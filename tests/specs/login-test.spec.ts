@@ -5,7 +5,9 @@ import { InventoryPage } from '../pages/inventory.page';
 
 const data = JSON.parse(readFileSync('./tests/data/testData.json', 'utf-8'));
 
-test('Should successfuly log in with a valid user', async ({ page }) => {
+test('Should successfuly log in with a valid user', {
+  tag: ['@regression']
+}, async ({ page }) => {
   const loginPage = new LoginPage(page, test.info());
   const inventoryPage = new InventoryPage(page, test.info());
   await loginPage.openPage();
@@ -16,7 +18,9 @@ test('Should successfuly log in with a valid user', async ({ page }) => {
   expect(await inventoryPage.header.getPageTitleText()).toEqual('Products')
 });
 
-test('Should show an error when logging in with invalid user', async ({ page }) => {
+test('Should show an error when logging in with invalid user', {
+  tag: ['@regression']
+}, async ({ page }) => {
   const loginPage = new LoginPage(page, test.info());
   // Expect a title "to contain" a substring.
   await loginPage.openPage();
@@ -26,7 +30,9 @@ test('Should show an error when logging in with invalid user', async ({ page }) 
   expect(await loginPage.getLoginErrorMessage()).toEqual(data.loginErrorMessage);
 });
 
-test('Should logout successfully when already logged in', async ({ page }) => {
+test('Should logout successfully when already logged in', {
+  tag: ['@regression']
+}, async ({ page }) => {
   const loginPage = new LoginPage(page, test.info());
   const inventoryPage = new InventoryPage(page, test.info());
   await loginPage.openPage();

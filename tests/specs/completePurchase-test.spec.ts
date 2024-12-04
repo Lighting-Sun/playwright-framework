@@ -11,7 +11,9 @@ import { CompletePage } from '../pages/complete.page';
 const data = JSON.parse(readFileSync('./tests/data/testData.json', 'utf-8'));
 
 
-test('Should do a successful purchase', async ({ page }) => {
+test('Should do a successful purchase', {
+    tag: ['@regression']
+}, async ({ page }) => {
     const loginPage = new LoginPage(page, test.info());
     const inventoryPage = new InventoryPage(page, test.info());
     const cartPage = new CartPage(page, test.info());
