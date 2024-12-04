@@ -1,0 +1,51 @@
+name: CI
+
+on:
+    workflow_dispatch:
+        inputs:
+          browser:
+            description: "select browser to run"
+            required: true
+            default: chrome
+            type: choice
+            options:
+              - chrome
+              - firefox
+          suite:
+            description: "select suite to run"
+            required: false
+            type: choice
+            options:
+              - regression
+              - smoke
+          artifacts:
+            description: "Allure report"
+            required: false
+            type: boolean
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  runTest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20.17.0"
+          cache: "npm"
+      - name: Install
+        run: npm ci --no-fund --no-audit
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Test
+        run: npx playwright test --grep @${{ github.event.inputs.suite }} --project=${{ github.event.inputs.browser }}
+      - if: github.event.inputs.artifacts == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+            name: playwright report
+            path: playwright-report/
+            retention-days: 30
