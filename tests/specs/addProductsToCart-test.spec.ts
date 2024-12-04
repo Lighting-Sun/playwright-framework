@@ -8,7 +8,9 @@ import { CartPage } from '../pages/cart.page';
 const data = JSON.parse(readFileSync('./tests/data/testData.json', 'utf-8'));
 
 
-test('Should add and validate multiple items added to cart', async ({ page }) => {
+test('Should add and validate multiple items added to cart', {
+    tag: ['@regression']
+}, async ({ page }) => {
     const loginPage = new LoginPage(page, test.info());
     const inventoryPage = new InventoryPage(page, test.info());
     const cartPage = new CartPage(page, test.info());
@@ -30,7 +32,9 @@ test('Should add and validate multiple items added to cart', async ({ page }) =>
     await cartPage.removeAllItemsFromCart();
 });
 
-test('Should add and validate a single specific item to cart', async ({ page }) => {
+test('Should add and validate a single specific item to cart', {
+    tag: ['@regression']
+}, async ({ page }) => {
     const loginPage = new LoginPage(page, test.info());
     const inventoryPage = new InventoryPage(page, test.info());
     const cartPage = new CartPage(page, test.info());
