@@ -12,7 +12,7 @@ const data = JSON.parse(readFileSync('./tests/data/testData.json', 'utf-8'));
 
 
 test('Should do a successful purchase', {
-    tag: ['@regression']
+    tag: ['@regression', '@smoke']
 }, async ({ page }) => {
     const loginPage = new LoginPage(page, test.info());
     const inventoryPage = new InventoryPage(page, test.info());
